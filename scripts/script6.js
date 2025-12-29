@@ -1,3 +1,4 @@
+// --------------question-1
 function isPrime(originalNum) {
   let num = Math.abs(originalNum);
   if (num === 0 || num === 1) return false;
@@ -47,7 +48,52 @@ function sieveOfEratosthenes(n) {
   return primes;
 }
 
-console.time();
-console.log(sieveOfEratosthenes(100));
-console.timeEnd();
+// ----------------question-2
+function isCoPrime(num1, num2) {
+  if (num1 < 2 || num2 < 2 || num1 % 1 > 0 || num2 % 1 > 0) {
+    return "please enter integers that are greater than 1";
+  }
+  let a = num1;
+  let b = num2;
+  while (b !== 0) {
+    [a, b] = [b, a % b];
+  }
+  return a === 1; // is GCD of a and b
+}
 
+// --------------question-3
+
+function printFirstNtermFibonacci(N) {
+  let result = [0, 1];
+  // let previousFibonacci = 0;
+  // let currentFibonacci = 0;
+ 
+  for (let i = 2n; i < BigInt(N); i++) {
+    result.push(result[i - 1n] + result[i - 2n]);
+  }
+  return result;
+}
+// where is optimised code?? for printing the series?
+
+// ----------------- question-4
+/* best method- Fast Doubling - highly optimized and faster */
+function nthFibonacciNumber(term) {
+  let n = term - 1;
+  function fib(n) {
+    if (n === 0n) return [0n, 1n];
+
+    const [prev, next] = fib(n / 2n);
+
+    const first = prev * (2n * next - prev);
+    const second = prev * prev + next * next;
+
+    if (n % 2n === 0n) {
+      return [first, second];
+    } else {
+      return [second, first + second];
+    }
+  }
+  return fib(BigInt(n))[0];
+}
+
+console.log(nthFibonacciNumber(1000));

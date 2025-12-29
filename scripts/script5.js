@@ -58,7 +58,7 @@ function findHCF(num1, num2) {
   }
   return HCF;
 }
-/*Optimised way- Euclidian Algorithm for GCD/HCF */
+/* Optimised way- Euclidian Algorithm for GCD/HCF */
 function findGCDbyEuclid(num1, num2) {
   // Ensure non-negative integers
   let a = Math.abs(num1);
