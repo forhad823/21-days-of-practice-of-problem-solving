@@ -1,16 +1,16 @@
 // --------------question-1
-function isPrime(n) {
-  if (!typeof n === BigInt) {
-    n = BigInt(n);
+function isPrime(num) {
+  if (typeof originalNum !== "bigint") {
+    num = BigInt(num);
   }
 
-  if (n < 2n) return false;
-  if (n === 2n || n === 3n) return true;
-  if (n % 2n === 0n || n % 3n === 0n) return false;
+  if (num < 2n) return false;
+  if (num === 2n || num === 3n) return true;
+  if (num % 2n === 0n || num % 3n === 0n) return false;
 
-  for (let i = 5n; i * i <= n; i += 6n) {
+  for (let i = 5n; i * i <= num; i += 6n) {
     // {note 2}
-    if (n % i === 0n || n % (i + 2n) === 0n) {
+    if (num % i === 0n || num % (i + 2n) === 0n) {
       return false;
     }
   }
