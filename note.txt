@@ -1,0 +1,40 @@
+---
+
+Keyboard shortcut for Open html file in the live server:
+Alt + L then Alt + 0 
+
+---
+
+-------------- Set Object methods------------------
+
+1. Basic Management Methods
+   These methods are used to create, modify, and inspect a single set.
+   add(value): Appends a new element with a specified value to the set.
+   javascript
+   const mySet = new Set();
+   mySet.add(1);
+   mySet.add(5);
+   mySet.add(5); // Duplicate ignored
+   Use code with caution.
+
+delete(value): Removes the element with the specified value.
+javascript
+mySet.delete(5); // returns true if element existed and was removed
+Use code with caution.
+
+has(value): Returns a boolean indicating whether an element with that value exists in the set.
+javascript
+mySet.has(1); // true
+Use code with caution.
+
+clear(): Removes all elements from the set.
+javascript
+mySet.clear(); // Set is now empty
+Use code with caution.
+
+2. Iteration Methods
+   These methods allow you to access the elements stored within the set.
+   forEach(callback): Executes a provided function once for each value in the set.
+   values(): Returns a new iterator object that yields the values for each element in the set (in insertion order).
+   keys(): An alias for values(), maintained for compatibility with the Map object.
+   entries(): Returns an iterator of [value, value] pairs for each element.

@@ -501,6 +501,8 @@ export function convertNumber(number, currentBase, targetBase) {
   return result;
 }
 
+
+
 // ----testing ground below
 /* 
 let binarystr = "1010100010";

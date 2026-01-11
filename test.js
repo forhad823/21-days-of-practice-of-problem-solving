@@ -129,4 +129,14 @@ export function convertNumber(number, currentBase, targetBase) {
   return result;
 }
 
-console.log(typeof convertNumber("4cd.123", 16, 10));
+const MAX_ATTEMPTS = 1_000_000; // 2026 best practice: Use numeric separators for readability
+
+for (let x = 0; x < MAX_ATTEMPTS; x++) {
+  // Use strict equality (===) for all comparisons
+  if (x ** x === 3 ** (x + 243)) {
+    console.log(x);
+    break;
+  }
+}
+
+// console.log(typeof convertNumber("4cd.123", 16, 10));
