@@ -83,7 +83,7 @@ export function convertNumber(number, currentBase, targetBase) {
   }
 
   const isValidNumber = [...whole, ...fraction].every((digit) =>
-    isValid(digit.charCodeAt(0))
+    isValid(digit.charCodeAt(0)),
   );
 
   if (!isValidNumber) {

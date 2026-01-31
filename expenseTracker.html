@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Expense Tracker</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f4f6f8;
+        padding: 20px;
+      }
+
+      .app {
+        width: 420px;
+        margin: auto;
+        background: #fff;
+        padding: 15px;
+        border: 1px solid #ccc;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .input-group {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      input,
+      select,
+      button {
+        padding: 6px;
+        font-size: 14px;
+      }
+
+      button {
+        cursor: pointer;
+        background: #222;
+        color: #fff;
+        border: none;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+
+      td,
+      th {
+        border: 1px solid #000;
+        padding: 5px;
+      }
+
+      .month {
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .label {
+        font-weight: bold;
+      }
+
+      .need {
+        background: #7fe9ff;
+        font-weight: bold;
+        text-align: center;
+        writing-mode: vertical-rl;
+        transform: rotate(90deg);
+      }
+
+      .want {
+        background: #4cd964;
+        font-weight: bold;
+        text-align: center;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+
+      .right {
+        text-align: right;
+      }
+
+      .summary {
+        font-weight: bold;
+      }
+
+      .saving {
+        color: green;
+        font-weight: bold;
+      }
+
+      .expense {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <h2>January</h2>
+
+      <!-- INPUT SECTION -->
+      <div class="input-group">
+        <input id="income" type="number" placeholder="Total Income (BDT)" />
+
+        <select id="category">
+          <option value="need">Need</option>
+          <option value="want">Want</option>
+        </select>
+
+        <input id="title" type="text" placeholder="Expense Name" />
+        <input id="amount" type="number" placeholder="Amount (BDT)" />
+
+        <button onclick="addExpense()">Add Expense</button>
+      </div>
+
+      <!-- TABLE -->
+      <table>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <script>
+      const data = {
+        income: 0,
+        need: [],
+        want: [],
+      };
+
+      function addExpense() {
+        const incomeInput = document.getElementById("income");
+        const category = document.getElementById("category").value;
+        const title = document.getElementById("title").value.trim();
+        const amount = Number(document.getElementById("amount").value);
+
+        if (incomeInput.value) data.income = Number(incomeInput.value);
+        if (!title || amount <= 0) return;
+
+        data[category].push({ title, amount });
+
+        document.getElementById("title").value = "";
+        document.getElementById("amount").value = "";
+
+        renderTable();
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        let totalExpense = 0;
+
+        tbody.innerHTML += `
+        <tr>
+          <td class="label">Total Income:</td>
+          <td colspan="2" class="right">${data.income.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="label">EXPENSES:</td>
+        </tr>
+      `;
+
+        ["need", "want"].forEach((type) => {
+          if (data[type].length === 0) return;
+
+          tbody.innerHTML += `
+          <tr>
+            <td class="${type}" rowspan="${data[type].length}">
+              ${type.toUpperCase()}
+            </td>
+            <td>${data[type][0].title}</td>
+            <td class="right">${data[type][0].amount.toFixed(2)}</td>
+          </tr>
+        `;
+
+          totalExpense += data[type][0].amount;
+
+          for (let i = 1; i < data[type].length; i++) {
+            tbody.innerHTML += `
+            <tr>
+              <td>${data[type][i].title}</td>
+              <td class="right">${data[type][i].amount.toFixed(2)}</td>
+            </tr>
+          `;
+            totalExpense += data[type][i].amount;
+          }
+        });
+
+        const balance = data.income - totalExpense;
+
+        tbody.innerHTML += `
+        <tr class="summary">
+          <td colspan="2">TOTAL EXPENSES:</td>
+          <td class="right">${totalExpense.toFixed(2)}</td>
+        </tr>
+        <tr class="summary">
+          <td colspan="2">
+             <span class="saving">SAVINGS</span> /
+             <span class="expense">OVER EXPENSE</span>:
+          </td>
+          <td class="right ${balance >= 0 ? "saving" : "expense"}">
+            ${Math.abs(balance).toFixed(2)}
+          </td>
+        </tr>
+      `;
+      }
+    </script>
+  </body>
+</html>
